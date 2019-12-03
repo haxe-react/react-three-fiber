@@ -23,14 +23,12 @@ class Thing extends coconut.ui.View {
 				onPointerOver=${e -> trace("hover")}
 				onPointerOut=${e -> trace("unhover")}
 			>
-				<boxBufferGeometry attach="geometry" args=${[1, 1, 1]} />
-				<meshStandardMaterial attach="material" />
+				<sphereBufferGeometry attach="geometry" args=${[1, 32, 32]} />
+				<meshNormalMaterial attach="material" wireframe />
 			</mesh>
-			<pointLight 
-				color=${0xff0000}
-				intensity=${0.8}
-				position=${[-70, 70, 70]}
-			/>
+			<pointLight color=${0xff0000} position=${[-1, 1, 1]}/>
+			<pointLight color=${0x00ff00} position=${[1, -1, 1]}/>
+			<pointLight color=${0x0000ff} position=${[1, 1, -1]}/>
 		</>
 	';
 	
