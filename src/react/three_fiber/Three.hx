@@ -1,5 +1,7 @@
 package react.three_fiber;
 
+import haxe.extern.EitherType;
+
 // https://github.com/react-spring/react-three-fiber/blob/master/src/three-types.ts
 
 class Three {
@@ -82,22 +84,27 @@ class Three {
 			else (cast react.React.createElement).apply(null, [tag, attr].concat(children));
 }
 
-extern class Object3D {}
-extern class Vector3 {}
-extern class Ray {}
-extern class Camera {}
+extern class ThreeObject3D {}
+extern class ThreeVector3 {}
+extern class ThreeRay {}
+extern class ThreeCamera {}
 
 extern class PointerEvent extends js.html.Event {
 	// ...DomEvent                   // All the original event data
 	// ...ThreeEvent                 // All of Three's intersection data
-	final object:Object3D;              // The object that was actually hit
-	final eventObject:Object3D;         // The object that registered the event
-	final unprojectedPoint:Vector3;     // Camera-unprojected point
-	final ray:Ray;                      // The ray that was used to strike the object
-	final camera:Camera;                // The camera that was used in the raycaster
+	final object:ThreeObject3D;              // The object that was actually hit
+	final eventObject:ThreeObject3D;         // The object that registered the event
+	final unprojectedPoint:ThreeVector3;     // Camera-unprojected point
+	final ray:ThreeRay;                      // The ray that was used to strike the object
+	final camera:ThreeCamera;                // The camera that was used in the raycaster
 	final sourceEvent:js.html.Event;         // A reference to the host event
 	final delta:Float;                 // Initial-click delta
 }
+
+typedef Euler = Array<Float>;
+typedef Matrix4 = Array<Float>;
+typedef Vector3 = Array<Float>;
+typedef Color = EitherType<Int, String>;
 
 typedef AttachableAttrs = {
 	?attach:String,
@@ -125,8 +132,8 @@ typedef NodeAttrs = {
 
 typedef Object3DAttrs = {
 	> EventAttrs,
-	?position:Array<Float>,
-	?rotation:Array<Float>,
+	?position:Vector3,
+	?rotation:Euler,
 }
 
 typedef MeshAttrs = {
@@ -296,7 +303,7 @@ typedef EdgesGeometryAttrs = {
 // materials
 typedef MaterialAttrs = {
 	> NodeAttrs,
-	?color:Int,
+	?color:Color,
 }
 typedef MeshBasicMaterialAttrs = {
 	> MaterialAttrs,
@@ -338,7 +345,7 @@ typedef MeshToonMaterialAttrs = {
 // lights
 typedef LightAttrs = {
 	> Object3DAttrs,
-	?color:Int,
+	?color:Color,
 	?intensity:Float,
 }
 typedef AmbientLightAttrs = {
