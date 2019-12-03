@@ -8,11 +8,12 @@ import react.three_fiber.Three.*;
 import react.three_fiber.Extensions;
 import react.three_fiber.Extensions.*;
 import react.three_fiber.Utils.*;
+
 using coconut.ui.Renderer;
+using tink.CoreApi;
 
 class PlaygroundCoco extends coconut.ui.View {
 	static function main() {
-		trace('coco');
 		extend({OrbitControls: OrbitControls, PointerLockControls: PointerLockControls, FlyControls: FlyControls});
 		js.Browser.document.getElementById('app').mount(hxx('<PlaygroundCoco/>'));
 	}
@@ -22,16 +23,24 @@ class PlaygroundCoco extends coconut.ui.View {
 	function render() '
 		<Canvas onCreated=${v -> ctx = v}>
 			<if ${ctx != null}> 
-				<Thing ctx=${ctx}/>
+				<Thing ctx=${ctx} data=${new Data()}/>
 			</if>
 		</Canvas>
 	';
 }
 
-
+class Data implements coconut.data.Model {
+	@:skipCheck @:loaded var human:three.core.Object3D = {
+		new Promise(function(resolve, reject) {
+			var loader = new FBXLoader();
+			loader.load('/models/human.fbx', resolve, function(progress) trace(progress), function(e) reject(Error.ofJsError(e)));
+		});
+	}
+}
 
 class Thing extends coconut.ui.View {
 	@:skipCheck @:attr var ctx:CanvasContext;
+	@:attr var data:Data;
 	@:state var t:Float = 0;
 	
 	static var material = new LineBasicMaterial({color: 0x00ff00});
@@ -78,6 +87,11 @@ class Thing extends coconut.ui.View {
 			<pointLight color=${0x0000ff} position=${[1, 1, -1]}/>
 			
 			<orbitControls args=${[ctx.camera, ctx.gl.domElement]} enableKeys />
+			
+			<switch ${data.human}>
+				<case ${Done(human)}> <primitive object=${human} rotation=${[t, 0, t]}/>
+				<case ${_}>
+			</switch>
 		</>
 	';
 	
@@ -89,4 +103,9 @@ class Thing extends coconut.ui.View {
 	}
 	
 	
+}
+@:jsRequire('three/examples/jsm/loaders/FBXLoader', 'FBXLoader')
+extern class FBXLoader {
+	function new();
+	function load(url:String, onSuccess:haxe.Constraints.Function, onProgress:haxe.Constraints.Function, onError:haxe.Constraints.Function):Void;
 }

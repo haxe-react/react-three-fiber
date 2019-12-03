@@ -5,6 +5,8 @@ import haxe.extern.EitherType;
 // https://github.com/react-spring/react-three-fiber/blob/master/src/three-types.ts
 
 class Three {
+	public static inline function primitive(attr:PrimitiveAttrs, ?children) return h('primitive', attr, children);
+	
 	public static inline function line(attr:LineAttrs, ?children) return h('line', attr, children);
 	public static inline function mesh(attr:MeshAttrs, ?children) return h('mesh', attr, children);
 	
@@ -122,6 +124,11 @@ typedef NodeAttrs = {
 	> AttachableAttrs,
 	> ConstructibleAttrs,
 	// onUpdate:Self->Void
+}
+
+typedef PrimitiveAttrs = {
+	> Object3DAttrs,
+	object:three.core.Object3D,
 }
 
 typedef Object3DAttrs = {
