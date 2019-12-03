@@ -5,6 +5,7 @@ import haxe.extern.EitherType;
 // https://github.com/react-spring/react-three-fiber/blob/master/src/three-types.ts
 
 class Three {
+	public static inline function line(attr:LineAttrs, ?children) return h('line', attr, children);
 	public static inline function mesh(attr:MeshAttrs, ?children) return h('mesh', attr, children);
 	
 	public static inline function camera(attr:CameraAttrs, ?children) return h('camera', attr, children);
@@ -78,25 +79,18 @@ class Three {
 	public static inline function rectAreaLight(attr:RectAreaLightAttrs, ?children) return h('rectAreaLight', attr, children);
 	public static inline function spotLight(attr:SpotLightAttrs, ?children) return h('spotLight', attr, children);
 	
-	static function h(tag:String, attr:Dynamic, children:Dynamic):react.ReactComponent.ReactSingleFragment
-		return 
-			if (children == null) cast react.React.createElement(tag, attr);
-			else (cast react.React.createElement).apply(null, [tag, attr].concat(children));
+	inline static function h(tag:String, attr:Dynamic, children:Dynamic):react.ReactComponent.ReactSingleFragment
+		return @:privateAccess coconut.react.Html.h(tag, attr, children);
 }
-
-extern class ThreeObject3D {}
-extern class ThreeVector3 {}
-extern class ThreeRay {}
-extern class ThreeCamera {}
 
 extern class PointerEvent extends js.html.Event {
 	// ...DomEvent                   // All the original event data
 	// ...ThreeEvent                 // All of Three's intersection data
-	final object:ThreeObject3D;              // The object that was actually hit
-	final eventObject:ThreeObject3D;         // The object that registered the event
-	final unprojectedPoint:ThreeVector3;     // Camera-unprojected point
-	final ray:ThreeRay;                      // The ray that was used to strike the object
-	final camera:ThreeCamera;                // The camera that was used in the raycaster
+	final object:three.core.Object3D;              // The object that was actually hit
+	final eventObject:three.core.Object3D;         // The object that registered the event
+	final unprojectedPoint:three.math.Vector3;     // Camera-unprojected point
+	final ray:three.math.Ray;                      // The ray that was used to strike the object
+	final camera:three.cameras.Camera;                // The camera that was used in the raycaster
 	final sourceEvent:js.html.Event;         // A reference to the host event
 	final delta:Float;                 // Initial-click delta
 }
@@ -113,7 +107,7 @@ typedef AttachableAttrs = {
 }
 
 typedef ConstructibleAttrs = {
-	?args:Any,
+	?args:Array<Any>,
 }
 typedef EventAttrs = {
 	?onClick:PointerEvent->Void,
@@ -136,8 +130,15 @@ typedef Object3DAttrs = {
 	?rotation:Euler,
 }
 
+typedef LineAttrs = {
+	> Object3DAttrs,
+	?geometry:three.core.Geometry,
+	?material:three.materials.Material,
+}
 typedef MeshAttrs = {
 	> Object3DAttrs,
+	?geometry:three.core.Geometry,
+	?material:three.materials.Material,
 }
 
 // camera
@@ -160,6 +161,7 @@ typedef ArrayCameraAttrs = {
 // geom
 typedef GeometryAttrs = {
 	> NodeAttrs,
+	?vertices:Array<three.math.Vector3>,
 }
 typedef ParametricGeometryAttrs = {
 	> GeometryAttrs,

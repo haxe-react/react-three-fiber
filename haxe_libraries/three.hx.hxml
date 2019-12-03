@@ -1,0 +1,5 @@
+-D three.hx=111.0.0
+# @install: lix --silent download "gh://github.com/tong/three.hx#1b7bfade00850b5370b19e0e422822715cc89f97" into three.hx/111.0.0/github/1b7bfade00850b5370b19e0e422822715cc89f97
+-cp ${HAXE_LIBCACHE}/three.hx/111.0.0/github/1b7bfade00850b5370b19e0e422822715cc89f97/src/
+-D three_hx
+--macro three.Lib.build()
