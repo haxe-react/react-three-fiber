@@ -1,0 +1,8 @@
+-cp tests
+-js bin/playground/react/index.js
+-main PlaygroundReact
+-dce full
+
+-lib react-three-fiber
+
+-D analyzer-optimize

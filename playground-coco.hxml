@@ -1,0 +1,10 @@
+-cp tests
+-js bin/playground/coco/index.js
+-main PlaygroundCoco
+-dce full
+
+-lib react-three-fiber
+-lib coconut.react-dom
+
+-D no-deprecation-warnings
+-D analyzer-optimize
