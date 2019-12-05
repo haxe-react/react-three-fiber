@@ -349,7 +349,11 @@ typedef MeshPhysicalMaterialAttrs = {
 }
 typedef MeshStandardMaterialAttrs = {
 	> MaterialAttrs,
+	?transparent:Bool,
 	?wireframe:Bool,
+	?depthWrite:Bool,
+	?depthTest:Bool,
+	?opacity:Float,
 	?metalness:Float,
 	?roughness:Float,
 }
