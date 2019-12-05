@@ -81,6 +81,8 @@ class Three {
 	public static inline function rectAreaLight(attr:RectAreaLightAttrs, ?children) return h('rectAreaLight', attr, children);
 	public static inline function spotLight(attr:SpotLightAttrs, ?children) return h('spotLight', attr, children);
 	
+	public static inline function gridHelper(attr:GridHelperAttrs, ?children) return h('gridHelper', attr, children);
+	
 	inline static function h(tag:String, attr:Dynamic, children:Dynamic):react.ReactComponent.ReactSingleFragment
 		return @:privateAccess coconut.react.Html.h(tag, attr, children);
 }
@@ -126,15 +128,17 @@ typedef NodeAttrs = {
 	// onUpdate:Self->Void
 }
 
-typedef PrimitiveAttrs = {
-	> Object3DAttrs,
-	object:three.core.Object3D,
-}
 
 typedef Object3DAttrs = {
 	> EventAttrs,
 	?position:Vector3,
 	?rotation:Euler,
+}
+
+typedef PrimitiveAttrs = {
+	> Object3DAttrs,
+	object:three.core.Object3D,
+	?onUpdate:three.core.Object3D->Void
 }
 
 typedef LineAttrs = {
@@ -346,6 +350,8 @@ typedef MeshPhysicalMaterialAttrs = {
 typedef MeshStandardMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
+	?metalness:Float,
+	?roughness:Float,
 }
 typedef MeshToonMaterialAttrs = {
 	> MeshPhongMaterialAttrs,
@@ -365,6 +371,8 @@ typedef DirectionalLightAttrs = {
 }
 typedef HemisphereLightAttrs = {
 	> LightAttrs,
+	?skyColor:Color,
+	?groundColor:Color,
 }
 typedef PointLightAttrs = {
 	> LightAttrs,
@@ -376,4 +384,9 @@ typedef RectAreaLightAttrs = {
 }
 typedef SpotLightAttrs = {
 	> LightAttrs,
+}
+
+// helpers
+typedef GridHelperAttrs = {
+	> NodeAttrs,
 }

@@ -17,7 +17,8 @@ class Extensions {
 
 @:jsRequire('three/examples/jsm/controls/OrbitControls', 'OrbitControls')
 extern class OrbitControls {
-	
+	var target:three.math.Vector3;
+	function update():Void;
 }
 @:jsRequire('three/examples/jsm/controls/PointerLockControls', 'PointerLockControls')
 extern class PointerLockControls {
@@ -32,6 +33,7 @@ typedef OrbitControlsAttrs = {
 	> NodeAttrs,
 	?ref:OrbitControls->Void,
 	?enableKeys:Bool,
+	?screenSpacePanning:Bool,
 }
 typedef PointerLockControlsAttrs = {
 	> NodeAttrs,
