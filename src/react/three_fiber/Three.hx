@@ -133,6 +133,7 @@ typedef Object3DAttrs = {
 	> EventAttrs,
 	?position:Vector3,
 	?rotation:Euler,
+	?renderOrder:Float,
 }
 
 typedef PrimitiveAttrs = {
