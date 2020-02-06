@@ -213,6 +213,7 @@ typedef RingGeometryAttrs = {
 }
 typedef PlaneGeometryAttrs = {
 	> GeometryAttrs,
+	?ref:three.geometries.PlaneGeometry->Void,
 }
 typedef LatheGeometryAttrs = {
 	> GeometryAttrs,
