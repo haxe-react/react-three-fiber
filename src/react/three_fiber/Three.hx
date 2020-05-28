@@ -3,11 +3,13 @@ package react.three_fiber;
 import haxe.extern.EitherType;
 
 // https://github.com/react-spring/react-three-fiber/blob/master/src/three-types.ts
-
+// @formatter:off
 class Three {
 	public static inline function primitive(attr:PrimitiveAttrs, ?children) return h('primitive', attr, children);
+	public static inline function group(attr:GroupAttrs, ?children) return h('group', attr, children);
 	
 	public static inline function line(attr:LineAttrs, ?children) return h('line', attr, children);
+	public static inline function lineSegments(attr:LineSegmentsAttrs, ?children) return h('lineSegments', attr, children);
 	public static inline function mesh(attr:MeshAttrs, ?children) return h('mesh', attr, children);
 	
 	public static inline function camera(attr:CameraAttrs, ?children) return h('camera', attr, children);
@@ -82,11 +84,12 @@ class Three {
 	public static inline function spotLight(attr:SpotLightAttrs, ?children) return h('spotLight', attr, children);
 	
 	public static inline function gridHelper(attr:GridHelperAttrs, ?children) return h('gridHelper', attr, children);
+	public static inline function axesHelper(attr:AxesHelperAttrs, ?children) return h('axesHelper', attr, children);
 	
 	inline static function h(tag:String, attr:Dynamic, children:Dynamic):react.ReactComponent.ReactSingleFragment
 		return @:privateAccess coconut.react.Html.h(tag, attr, children);
 }
-
+// @formatter:on
 extern class PointerEvent extends js.html.Event {
 	// ...DomEvent                   // All the original event data
 	// ...ThreeEvent                 // All of Three's intersection data
@@ -113,6 +116,7 @@ typedef AttachableAttrs = {
 typedef ConstructibleAttrs = {
 	?args:Array<Any>,
 }
+
 typedef EventAttrs = {
 	?onClick:PointerEvent->Void,
 	?onPointerUp:PointerEvent->Void,
@@ -122,18 +126,22 @@ typedef EventAttrs = {
 	?onPointerMove:PointerEvent->Void,
 	?onWheel:PointerEvent->Void,
 }
+
 typedef NodeAttrs = {
+	> BaseAttr,
 	> AttachableAttrs,
 	> ConstructibleAttrs,
 	// onUpdate:Self->Void
 }
 
-
 typedef Object3DAttrs = {
+	> BaseAttr,
 	> EventAttrs,
 	?position:Vector3,
 	?rotation:Euler,
+	?scale:Vector3,
 	?renderOrder:Float,
+	?dispose:Any,
 }
 
 typedef PrimitiveAttrs = {
@@ -142,11 +150,19 @@ typedef PrimitiveAttrs = {
 	?onUpdate:three.core.Object3D->Void
 }
 
-typedef LineAttrs = {
+typedef GroupAttrs = {
 	> Object3DAttrs,
-	?geometry:three.core.Geometry,
-	?material:three.materials.Material,
+	?type:String,
 }
+
+typedef LineAttrs = {
+	> MeshAttrs,
+}
+
+typedef LineSegmentsAttrs = {
+	> MeshAttrs,
+}
+
 typedef MeshAttrs = {
 	> Object3DAttrs,
 	?geometry:three.core.Geometry,
@@ -157,15 +173,19 @@ typedef MeshAttrs = {
 typedef CameraAttrs = {
 	> Object3DAttrs,
 }
+
 typedef PerspectiveCameraAttrs = {
 	> Object3DAttrs,
 }
+
 typedef OrthographicCameraAttrs = {
 	> Object3DAttrs,
 }
+
 typedef CubeCameraAttrs = {
 	> Object3DAttrs,
 }
+
 typedef ArrayCameraAttrs = {
 	> Object3DAttrs,
 }
@@ -175,64 +195,84 @@ typedef GeometryAttrs = {
 	> NodeAttrs,
 	?vertices:Array<three.math.Vector3>,
 }
+
 typedef ParametricGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef TetrahedronGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef OctahedronGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef IcosahedronGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef DodecahedronGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef PolyhedronGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef TubeGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef TorusKnotGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef TorusGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef TextGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef SphereGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef RingGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef PlaneGeometryAttrs = {
 	> GeometryAttrs,
 	?ref:three.geometries.PlaneGeometry->Void,
 }
+
 typedef LatheGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef ShapeGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef ExtrudeGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef ConeGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef CylinderGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef CircleGeometryAttrs = {
 	> GeometryAttrs,
 }
+
 typedef BoxGeometryAttrs = {
 	> GeometryAttrs,
 }
@@ -241,114 +281,142 @@ typedef BoxGeometryAttrs = {
 typedef BufferGeometryAttrs = {
 	> NodeAttrs,
 }
+
 typedef InstancedBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef BoxBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef CircleBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef ConeBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef CylinderBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef DodecahedronBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef ExtrudeBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef IcosahedronBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef LatheBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef OctahedronBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef ParametricBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef PlaneBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef PolyhedronBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef RingBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef ShapeBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef SphereBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef TetrahedronBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef TextBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef TorusBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef TorusKnotBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef TubeBufferGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef WireframeGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
+
 typedef EdgesGeometryAttrs = {
 	> BufferGeometryAttrs,
 }
-
-
-
-
 
 // materials
 typedef MaterialAttrs = {
 	> NodeAttrs,
 	?color:Color,
 }
+
 typedef MeshBasicMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
 }
+
 typedef MeshDepthMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
 }
+
 typedef MeshDistanceMaterialAttrs = {
 	> MaterialAttrs,
 }
+
 typedef MeshLambertMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
 }
+
 typedef MeshMatcapMaterialAttrs = {
 	> MaterialAttrs,
 }
+
 typedef MeshNormalMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
 }
+
 typedef MeshPhongMaterialAttrs = {
 	> MaterialAttrs,
 	?wireframe:Bool,
 }
+
 typedef MeshPhysicalMaterialAttrs = {
 	> MeshStandardMaterialAttrs,
 }
+
 typedef MeshStandardMaterialAttrs = {
 	> MaterialAttrs,
 	?transparent:Bool,
@@ -359,6 +427,7 @@ typedef MeshStandardMaterialAttrs = {
 	?metalness:Float,
 	?roughness:Float,
 }
+
 typedef MeshToonMaterialAttrs = {
 	> MeshPhongMaterialAttrs,
 }
@@ -369,30 +438,42 @@ typedef LightAttrs = {
 	?color:Color,
 	?intensity:Float,
 }
+
 typedef AmbientLightAttrs = {
 	> LightAttrs,
 }
+
 typedef DirectionalLightAttrs = {
 	> LightAttrs,
 }
+
 typedef HemisphereLightAttrs = {
 	> LightAttrs,
 	?skyColor:Color,
 	?groundColor:Color,
 }
+
 typedef PointLightAttrs = {
 	> LightAttrs,
 	?decay:Float,
 	?distance:Float,
 }
+
 typedef RectAreaLightAttrs = {
 	> LightAttrs,
 }
+
 typedef SpotLightAttrs = {
 	> LightAttrs,
 }
 
 // helpers
 typedef GridHelperAttrs = {
+	> NodeAttrs,
+	> LineSegmentsAttrs,
+	?opacity:Float,
+}
+
+typedef AxesHelperAttrs = {
 	> NodeAttrs,
 }

@@ -5,10 +5,8 @@ import react.ReactComponent;
 
 @:jsRequire('react-three-fiber', 'Canvas')
 extern class Canvas extends ReactComponentOfProps<{
-	> BasePropsWithChildren,
-	?onCreated:CanvasContext->Void,
+	> BasePropsWithChildren, ?onCreated:CanvasContext->Void,
 }> {}
-
 
 typedef SharedCanvasContext = {
 	gl:three.renderers.WebGLRenderer,
@@ -44,19 +42,19 @@ typedef CanvasContext = {
 }
 
 typedef Size = {
-	final x:Float; 
-	final y:Float; 
-	final width:Float; 
-	final height:Float; 
-	final top:Float; 
-	final right:Float; 
-	final bottom:Float; 
+	final x:Float;
+	final y:Float;
+	final width:Float;
+	final height:Float;
+	final top:Float;
+	final right:Float;
+	final bottom:Float;
 	final left:Float;
 }
 
 typedef Viewport = {
-	final width:Float; 
-	final height:Float; 
+	final width:Float;
+	final height:Float;
 	final factor:Float;
 }
 
