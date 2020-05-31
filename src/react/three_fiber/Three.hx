@@ -437,6 +437,7 @@ typedef LightAttrs = {
 	> Object3DAttrs,
 	?color:Color,
 	?intensity:Float,
+	?castShadow:Bool,
 }
 
 typedef AmbientLightAttrs = {
