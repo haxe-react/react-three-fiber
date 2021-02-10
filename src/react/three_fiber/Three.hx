@@ -165,7 +165,7 @@ typedef LineSegmentsAttrs = {
 
 typedef MeshAttrs = {
 	> Object3DAttrs,
-	?geometry:three.core.Geometry,
+	?geometry:three.core.BufferGeometry,
 	?material:three.materials.Material,
 }
 
