@@ -102,9 +102,9 @@ extern class PointerEvent extends js.html.Event {
 	final delta:Float;                 // Initial-click delta
 }
 
-abstract Euler(Array<Float>) from Array<Float> to Array<Float> {}
-abstract Matrix4(Array<Float>) from Array<Float> to Array<Float> {}
-abstract Vector3(Array<Float>) from Array<Float> to Array<Float> {}
+@:transitive abstract Euler(Array<Float>) from Array<Float> to Array<Float> {}
+@:transitive abstract Matrix4(Array<Float>) from Array<Float> to Array<Float> {}
+@:transitive abstract Vector3(Array<Float>) from Array<Float> to Array<Float> {}
 typedef Color = EitherType<Int, String>;
 
 typedef AttachableAttrs = {
